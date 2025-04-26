@@ -1,0 +1,54 @@
+<!-- create-test.component.html -->
+<div class="test-form">
+    <h2>Создание теста</h2>
+    
+    <div class="form-group">
+      <label>Название теста:</label>
+      <input [(ngModel)]="test.title" type="text">
+    </div>
+    
+    <div class="form-group">
+      <label>Описание:</label>
+      <textarea [(ngModel)]="test.description"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Длительность (минуты):</label>
+      <input [(ngModel)]="test.duration" type="number" min="1">
+    </div>
+    
+    <h3>Добавление вопросов</h3>
+    
+    <div class="question-form">
+      <div class="form-group">
+        <label>Текст вопроса:</label>
+        <textarea [(ngModel)]="currentQuestion.text"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Варианты ответов:</label>
+        <div *ngFor="let option of currentQuestion.options; let i = index">
+          <input [(ngModel)]="currentQuestion.options[i]" type="text">
+          <input type="radio" name="correct" [value]="i" [(ngModel)]="currentQuestion.correctAnswer">
+          Правильный
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Баллы за вопрос:</label>
+        <input [(ngModel)]="currentQuestion.points" type="number" min="1">
+      </div>
+      
+      <button (click)="addQuestion()">Добавить вопрос</button>
+    </div>
+    
+    <div class="questions-list">
+      <h4>Добавленные вопросы ({{test.questions.length}})</h4>
+      <div *ngFor="let question of test.questions" class="question-item">
+        <p>{{question.text}}</p>
+        <p>Баллы: {{question.points}}</p>
+      </div>
+    </div>
+    
+    <button (click)="saveTest()">Сохранить тест</button>
+</div>

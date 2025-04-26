@@ -1,0 +1,28 @@
+<!-- test.component.html -->
+<div class="test-container" *ngIf="test">
+    <div class="timer" *ngIf="test.duration">
+      Осталось времени: {{ timeLeft | timeFormat }} <!-- Нужно создать pipe для форматирования -->
+    </div>
+    
+    <div class="question-container">
+      <h3>Вопрос {{ currentQuestionIndex + 1 }} из {{ test.questions.length }}</h3>
+      <p>{{ test.questions[currentQuestionIndex].text }}</p>
+      
+      <div class="options">
+        <div *ngFor="let option of test.questions[currentQuestionIndex].options; let i = index" 
+             class="option" 
+             [class.selected]="isSelected(i)"
+             (click)="selectAnswer(i)">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="navigation">
+      <button (click)="prevQuestion()" [disabled]="currentQuestionIndex === 0">Назад</button>
+      <button *ngIf="currentQuestionIndex < test.questions.length - 1" 
+              (click)="nextQuestion()">Далее</button>
+      <button *ngIf="currentQuestionIndex === test.questions.length - 1" 
+              (click)="finishTest()">Завершить тест</button>
+    </div>
+</div>
