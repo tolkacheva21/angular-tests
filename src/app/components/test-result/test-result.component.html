@@ -1,0 +1,57 @@
+<div class="results-container">
+    <h2>Результаты тестирования</h2>
+  
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" [(ngModel)]="searchText" 
+               (input)="applyFilter()"
+               placeholder="Поиск по имени или тесту...">
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Студент</th>
+            <th>Тест</th>
+            <th>Баллы</th>
+            <th>% выполнения</th>
+            <th>Дата</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of filteredResults; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ result.studentName }}</td>
+            <td>{{ result.testTitle }}</td>
+            <td>{{ result.score }} / {{ result.maxScore }}</td>
+            <td>
+              <div class="progress-bar-container">
+                <div class="progress-bar" 
+                     [style.width]="calculatePercentage(result.score, result.maxScore) + '%'"
+                     [class.high]="calculatePercentage(result.score, result.maxScore) >= 80"
+                     [class.medium]="calculatePercentage(result.score, result.maxScore) >= 50 && 
+                                   calculatePercentage(result.score, result.maxScore) < 80"
+                     [class.low]="calculatePercentage(result.score, result.maxScore) < 50">
+                  {{ calculatePercentage(result.score, result.maxScore) }}%
+                </div>
+              </div>
+            </td>
+            <td>{{ result.completedAt | date:'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <button (click)="viewDetails(result)" class="btn-details">
+                Детали
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="filteredResults.length === 0" class="no-results">
+      Нет результатов для отображения
+    </div>
+</div>

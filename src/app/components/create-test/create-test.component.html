@@ -1,0 +1,71 @@
+<div class="create-test">
+  <h2>Создание теста</h2>
+  
+  <div class="test-meta">
+    <div class="form-group">
+      <label>Название теста:</label>
+      <input type="text" [(ngModel)]="test.title" class="form-control">
+    </div>
+    
+    <div class="form-group">
+      <label>Описание теста:</label>
+      <textarea [(ngModel)]="test.description" class="form-control"></textarea>
+    </div>
+  </div>
+  
+  <div class="questions-list">
+    <h3>Вопросы теста</h3>
+    
+    <div class="question" *ngFor="let question of test.questions; let i = index">
+      <div class="question-header">
+        <h4>Вопрос #{{i + 1}}</h4>
+        <button (click)="removeQuestion(i)" class="btn btn-danger btn-sm">
+          Удалить
+        </button>
+      </div>
+      
+      <div class="form-group">
+        <label>Текст вопроса:</label>
+        <input type="text" [(ngModel)]="question.text" class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label>Баллы за вопрос:</label>
+        <input type="number" [(ngModel)]="question.points" min="1" class="form-control">
+      </div>
+      
+      <div class="options">
+        <label>Варианты ответов:</label>
+        <div class="option" *ngFor="let option of question.options; let j = index">
+          <div class="option-controls">
+            <input type="radio" 
+                   [(ngModel)]="question.correctAnswer" 
+                   [value]="j"
+                   [name]="'correct-answer-' + i">
+            <input type="text" [(ngModel)]="option.text" class="form-control">
+            <button (click)="removeOption(i, j)" class="btn btn-danger btn-sm">
+              Удалить
+            </button>
+          </div>
+        </div>
+        
+        <button (click)="addOption(i)" class="btn btn-primary btn-sm">
+          Добавить вариант
+        </button>
+      </div>
+    </div>
+    
+    <button (click)="addQuestion()" class="btn btn-primary">
+      Добавить вопрос
+    </button>
+  </div>
+  
+  <div class="actions">
+    <button (click)="saveTest()" class="btn btn-success">Сохранить тест</button>
+    <label class="btn btn-info">
+      Загрузить тест
+      <input type="file" accept=".json" (change)="loadTest($event)" style="display: none;">
+    </label>
+    <button (click)="clearTest()" class="btn btn-warning">Очистить</button>
+  </div>
+</div>
