@@ -1,0 +1,142 @@
+.take-test-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.student-info {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.student-info label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.student-info input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.test-description {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #007bff;
+}
+
+.questions-list {
+  margin-top: 30px;
+}
+
+.question-card {
+  margin-bottom: 25px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+.question-card:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.question-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.points {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.options-list {
+  margin-left: 20px;
+}
+
+.option {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.option:hover {
+  background-color: #f8f9fa;
+}
+
+.option label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option input[type="radio"] {
+  margin-right: 10px;
+}
+
+.actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.submit-btn {
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .take-test-container {
+    padding: 15px;
+  }
+  
+  .question-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .points {
+    margin-top: 5px;
+  }
+}

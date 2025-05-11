@@ -1,0 +1,43 @@
+<div class="take-test-container">
+  <h2>Прохождение теста: {{test?.title}}</h2>
+  
+  <div *ngIf="test">
+    <div class="student-info">
+      <label for="studentName">Ваше имя:</label>
+      <input type="text" id="studentName" [(ngModel)]="studentName" placeholder="Введите ваше имя">
+    </div>
+
+    <div class="test-description">
+      <p>{{test.description}}</p>
+    </div>
+
+    <div class="questions-list">
+      <div *ngFor="let question of test.questions; let i = index" class="question-card">
+        <div class="question-header">
+          <h3>Вопрос {{i + 1}}: {{question.text}}</h3>
+          <span class="points">(Баллов: {{question.points}})</span>
+        </div>
+        
+        <div class="options-list">
+          <div *ngFor="let option of question.options; let j = index" class="option">
+            <label>
+              <input type="radio" 
+                     [name]="'question_' + i" 
+                     [value]="j" 
+                     [(ngModel)]="userAnswers[i]">
+              {{option.text}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button (click)="submitTest()" class="submit-btn">Отправить тест</button>
+    </div>
+  </div>
+
+  <div *ngIf="!test" class="loading">
+    Загрузка теста...
+  </div>
+</div>

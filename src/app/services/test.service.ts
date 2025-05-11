@@ -41,4 +41,13 @@ export class TestService {
   getResultsByTestId(testId: string): TestResult[] {
     return this.results.filter(r => r.testId === testId);
   }
+
+  deleteTest(testId: string): void {
+    this.tests = this.tests.filter(test => test.id !== testId);
+    localStorage.setItem('tests', JSON.stringify(this.tests));
+    
+    // Также удаляем связанные результаты
+    this.results = this.results.filter(result => result.testId !== testId);
+    localStorage.setItem('results', JSON.stringify(this.results));
+  }
 }

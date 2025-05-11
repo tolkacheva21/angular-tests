@@ -1,0 +1,13 @@
+<nav>
+  <div class="nav-content">
+    <a routerLink="/">Главная</a>
+    
+    <div class="nav-links" *ngIf="authService.isLoggedIn()">
+      <span>Добро пожаловать, {{ authService.currentUserValue?.username }}</span>
+      
+      <a *ngIf="authService.isTeacher()" routerLink="/teacher">Панель преподавателя</a>
+      
+      <button (click)="logout()">Выйти</button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,53 @@
+<div class="list-tests-container">
+  <h2>Список тестов</h2>
+  
+  <div class="controls">
+    <button routerLink="/tests/new" class="btn btn-primary">
+      Создать новый тест
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Загрузка тестов...
+  </div>
+
+  <div *ngIf="!isLoading && tests.length === 0" class="no-tests">
+    Нет созданных тестов
+  </div>
+
+  <div class="tests-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Описание</th>
+          <th>Вопросы</th>
+          <th>Баллы</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let test of tests">
+          <td>{{ test.title }}</td>
+          <td>{{ test.description }}</td>
+          <td>{{ getQuestionCount(test) }}</td>
+          <td>{{ getTotalPoints(test) }}</td>
+          <td class="actions">
+            <button (click)="editTest(test.id)" class="btn btn-edit">
+              Редактировать
+            </button>
+            <button (click)="takeTest(test.id)" class="btn btn-take">
+              Пройти
+            </button>
+            <button (click)="viewResults(test.id)" class="btn btn-results">
+              Результаты
+            </button>
+            <button (click)="deleteTest(test.id)" class="btn btn-delete">
+              Удалить
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

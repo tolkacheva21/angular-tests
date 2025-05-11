@@ -3,6 +3,7 @@ import { TestResult } from '../../models/test-result.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TestService } from '../../services/test.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-result',
@@ -17,7 +18,10 @@ export class TestResultComponent implements OnInit {
   filteredResults: TestResult[] = [];
   searchText: string = '';
 
-  constructor(private testService: TestService) {}
+  constructor(
+    private testService: TestService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.results = this.testService.getResults();
@@ -44,5 +48,11 @@ export class TestResultComponent implements OnInit {
   viewDetails(result: TestResult): void {
     console.log('Детали результата:', result);
     alert(`Детали теста для ${result.studentName}\nПравильных ответов: ${result.score} из ${result.maxScore}`);
+  }
+
+  goBack(): void {
+    this.router.navigate(['/tests']).catch(err => {
+    console.error('Navigation error:', err);
+    });
   }
 }

@@ -1,0 +1,41 @@
+nav {
+  background-color: #343a40;
+  padding: 1rem;
+  color: white;
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+a:hover, button:hover {
+  color: #cccccc;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-links span {
+  margin-right: 10px;
+}
