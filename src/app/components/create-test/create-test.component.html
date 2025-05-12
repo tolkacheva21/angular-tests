@@ -1,6 +1,10 @@
 <div class="create-test">
+  <h2>{{ isEditMode ? 'Редактирование теста' : 'Создание теста' }}</h2>
+  <div *ngIf="isEditMode" class="edit-mode-indicator">
+    Вы редактируете существующий тест. Все изменения будут сохранены при нажатии "Сохранить тест".
+  </div>
+
   <h2>Создание теста</h2>
-  
   <div class="test-meta">
     <div class="form-group">
       <label>Название теста:</label>

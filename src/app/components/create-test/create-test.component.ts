@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Test } from '../../models/test.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TestService } from '../../services/test.service';
 
 
@@ -21,12 +21,28 @@ export class CreateTestComponent {
     description: '',
     questions: []
   };
+  isEditMode = false;
 
   constructor(
     private testService: TestService,
-    private router: Router
-  ) {
-    this.addQuestion(); // Добавляем первый вопрос при инициализации
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const testId = this.route.snapshot.paramMap.get('id');
+    if (testId) {
+      this.isEditMode = true;
+      const existingTest = this.testService.getTestById(testId);
+      if (existingTest) {
+        this.test = JSON.parse(JSON.stringify(existingTest)); // Deep copy
+      } else {
+        alert('Тест не найден');
+        this.router.navigate(['/tests']);
+      }
+    } else {
+      this.addQuestion(); // Добавляем первый вопрос только при создании нового теста
+    }
   }
 
   addQuestion(): void {
@@ -64,8 +80,14 @@ export class CreateTestComponent {
   saveTest(): void {
     if (!this.validateTest()) return;
 
-    this.testService.saveTest(this.test);
-    alert('Тест успешно сохранен!');
+    if (this.isEditMode) {
+      this.testService.updateTest(this.test);
+      alert('Тест успешно обновлен!');
+    } else {
+      this.testService.saveTest(this.test);
+      alert('Тест успешно сохранен!');
+    }
+
     this.router.navigate(['/tests']);
   }
 

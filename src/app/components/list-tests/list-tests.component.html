@@ -2,7 +2,7 @@
   <h2>Список тестов</h2>
   
   <div class="controls">
-    <button routerLink="/tests/new" class="btn btn-primary">
+    <button *ngIf="isTeacher" routerLink="/teacher/tests/new" class="btn btn-primary">
       Создать новый тест
     </button>
   </div>
@@ -33,7 +33,7 @@
           <td>{{ getQuestionCount(test) }}</td>
           <td>{{ getTotalPoints(test) }}</td>
           <td class="actions">
-            <button (click)="editTest(test.id)" class="btn btn-edit">
+            <button *ngIf="isTeacher" [routerLink]="['/teacher/tests', test.id, 'edit']" class="btn btn-edit">
               Редактировать
             </button>
             <button (click)="takeTest(test.id)" class="btn btn-take">
@@ -42,7 +42,7 @@
             <button (click)="viewResults(test.id)" class="btn btn-results">
               Результаты
             </button>
-            <button (click)="deleteTest(test.id)" class="btn btn-delete">
+            <button *ngIf="isTeacher" (click)="deleteTest(test.id)" class="btn btn-delete">
               Удалить
             </button>
           </td>

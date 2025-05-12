@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Test } from '../../models/test.model';
 import { TestService } from '../../services/test.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-list-tests',
@@ -15,11 +16,15 @@ import { TestService } from '../../services/test.service';
 export class ListTestsComponent implements OnInit {
   tests: Test[] = [];
   isLoading = true;
+  isTeacher: boolean = false;
 
   constructor(
     private testService: TestService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.isTeacher = this.authService.isTeacher();
+  }
 
   ngOnInit(): void {
     this.loadTests();

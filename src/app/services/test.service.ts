@@ -25,6 +25,11 @@ export class TestService {
     return [...this.tests];
   }
 
+  getTestById(id: string): Test | undefined {
+    const tests = this.getTests();
+    return tests.find(test => test.id === id);
+  }
+
   saveResult(result: Omit<TestResult, 'id'>): void {
     const newResult: TestResult = {
       ...result,
@@ -40,6 +45,19 @@ export class TestService {
 
   getResultsByTestId(testId: string): TestResult[] {
     return this.results.filter(r => r.testId === testId);
+  }
+
+  private saveTests(tests: Test[]): void {
+    localStorage.setItem('tests', JSON.stringify(tests));
+  }
+
+  updateTest(updatedTest: Test): void {
+    const tests = this.getTests();
+    const index = tests.findIndex(test => test.id === updatedTest.id);
+    if (index !== -1) {
+      tests[index] = updatedTest;
+      this.saveTests(tests);
+    }
   }
 
   deleteTest(testId: string): void {
