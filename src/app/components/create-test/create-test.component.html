@@ -4,7 +4,6 @@
     Вы редактируете существующий тест. Все изменения будут сохранены при нажатии "Сохранить тест".
   </div>
 
-  <h2>Создание теста</h2>
   <div class="test-meta">
     <div class="form-group">
       <label>Название теста:</label>
@@ -65,7 +64,9 @@
   </div>
   
   <div class="actions">
-    <button (click)="saveTest()" class="btn btn-success">Сохранить тест</button>
+    <button (click)="saveTest()" class="btn btn-success">
+      {{ isEditMode ? 'Обновить тест' : 'Сохранить тест' }}
+    </button>
     <label class="btn btn-info">
       Загрузить тест
       <input type="file" accept=".json" (change)="loadTest($event)" style="display: none;">

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TestService } from '../../services/test.service';
 import { Test } from '../../models/test.model';
 import { TestResult } from '../../models/test-result.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-take-test',
@@ -22,7 +23,8 @@ export class TakeTestComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private testService: TestService
+    private testService: TestService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class TakeTestComponent implements OnInit {
 
   submitTest(): void {
     if (!this.studentName) {
-      alert('Введите ваше имя');
+      this.showSnackbar('Введите ваше имя');
       return;
     }
 
@@ -74,5 +76,9 @@ export class TakeTestComponent implements OnInit {
 
     this.testService.saveResult(result);
     this.router.navigate(['tests/results']);
+  }
+
+  private showSnackbar(message: string): void {
+    this.snackBar.open(message, 'Закрыть', {duration: 3000});
   }
 }

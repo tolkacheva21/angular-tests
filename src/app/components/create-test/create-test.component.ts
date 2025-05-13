@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TestService } from '../../services/test.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class CreateTestComponent {
   constructor(
     private testService: TestService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -35,14 +37,19 @@ export class CreateTestComponent {
       this.isEditMode = true;
       const existingTest = this.testService.getTestById(testId);
       if (existingTest) {
-        this.test = JSON.parse(JSON.stringify(existingTest)); // Deep copy
+        this.test = this.deepCopy(existingTest); // Если тест существует - извлекаем
       } else {
-        alert('Тест не найден');
+        this.showSnackbar("Тест не найден");
         this.router.navigate(['/tests']);
       }
     } else {
+      this.test.id = Date.now().toString(); // Генерируем новый ID только для нового теста
       this.addQuestion(); // Добавляем первый вопрос только при создании нового теста
     }
+  }
+
+  private deepCopy<T>(obj: T): T {
+    return JSON.parse(JSON.stringify(obj));
   }
 
   addQuestion(): void {
@@ -82,10 +89,10 @@ export class CreateTestComponent {
 
     if (this.isEditMode) {
       this.testService.updateTest(this.test);
-      alert('Тест успешно обновлен!');
+      this.showSnackbar('Тест успешно обновлен!');
     } else {
       this.testService.saveTest(this.test);
-      alert('Тест успешно сохранен!');
+      this.showSnackbar('Тест успешно сохранен!');
     }
 
     this.router.navigate(['/tests']);
@@ -93,12 +100,12 @@ export class CreateTestComponent {
 
   private validateTest(): boolean {
     if (!this.test.title) {
-      alert('Введите название теста');
+      this.showSnackbar('Введите название теста');
       return false;
     }
 
     if (this.test.questions.length === 0) {
-      alert('Добавьте хотя бы один вопрос');
+      this.showSnackbar('Добавьте хотя бы один вопрос');
       return false;
     }
 
@@ -106,23 +113,23 @@ export class CreateTestComponent {
       const question = this.test.questions[i];
       
       if (!question.text) {
-        alert(`Вопрос #${i + 1}: введите текст вопроса`);
+        this.showSnackbar(`Вопрос №${i + 1}: введите текст вопроса`);
         return false;
       }
 
       if (question.options.length < 2) {
-        alert(`Вопрос #${i + 1}: должно быть минимум 2 варианта ответа`);
+        this.showSnackbar(`Вопрос №${i + 1}: должно быть минимум 2 варианта ответа`);
         return false;
       }
 
       if (question.correctAnswer === null) {
-        alert(`Вопрос #${i + 1}: выберите правильный ответ`);
+        this.showSnackbar(`Вопрос №${i + 1}: выберите правильный ответ`);
         return false;
       }
 
       for (let j = 0; j < question.options.length; j++) {
         if (!question.options[j].text) {
-          alert(`Вопрос #${i + 1}: вариант ответа #${j + 1} не может быть пустым`);
+          this.showSnackbar(`Вопрос №${i + 1}: вариант ответа №${j + 1} не может быть пустым`);
           return false;
         }
       }
@@ -143,15 +150,20 @@ export class CreateTestComponent {
         const loadedTest = JSON.parse(reader.result as string) as Test;
         this.test = loadedTest;
       } catch (error) {
-        alert('Ошибка при загрузке файла: ' + (error as Error).message);
+        this.showSnackbar('Ошибка при загрузке файла: ' + (error as Error).message);
       }
     };
 
     reader.readAsText(file);
   }
 
-  clearTest(): void {
-    if (confirm('Вы уверены, что хотите очистить форму?')) {
+  async clearTest(): Promise<void> {
+    const confirmed = await this.showConfirmDialog(
+      'Подтверждение',
+      'Вы уверены, что хотите очистить форму?'
+    );
+
+    if (confirmed) {
       this.test = {
         id: '',
         title: '',
@@ -162,16 +174,21 @@ export class CreateTestComponent {
     }
   }
 
-  private downloadFile(data: string, filename: string): void {
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+  private showSnackbar(message: string): void {
+    this.snackBar.open(message, 'Закрыть', {duration: 3000});
+  }
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  private showConfirmDialog(title: string, message: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      const snackBarRef = this.snackBar.open(message, 'Подтвердить', {duration: 5000});
+
+      snackBarRef.onAction().subscribe(() => {
+        resolve(true);
+      });
+
+      snackBarRef.afterDismissed().subscribe(() => {
+        resolve(false);
+      });
+    });
   }
 }

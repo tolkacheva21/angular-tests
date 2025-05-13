@@ -5,6 +5,9 @@
     <button *ngIf="isTeacher" routerLink="/teacher/tests/new" class="btn btn-primary">
       Создать новый тест
     </button>
+    <button (click)="viewAllResults()" class="btn btn-results">
+      Результаты
+    </button>
   </div>
 
   <div *ngIf="isLoading" class="loading">
@@ -39,9 +42,9 @@
             <button (click)="takeTest(test.id)" class="btn btn-take">
               Пройти
             </button>
-            <button (click)="viewResults(test.id)" class="btn btn-results">
+            <!-- <button (click)="viewResults(test.id)" class="btn btn-results">
               Результаты
-            </button>
+            </button> -->
             <button *ngIf="isTeacher" (click)="deleteTest(test.id)" class="btn btn-delete">
               Удалить
             </button>

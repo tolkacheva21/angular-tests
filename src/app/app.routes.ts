@@ -17,7 +17,7 @@ export const routes: Routes = [
       { path: 'tests', component: ListTestsComponent },
       { path: 'tests/new', component: CreateTestComponent },
       { path: 'tests/:id/edit', component: CreateTestComponent },
-      { path: 'tests/:id/results', component: TestResultComponent },
+      { path: 'results', component: TestResultComponent },
       { path: '', redirectTo: 'tests', pathMatch: 'full' }
     ]
   },
@@ -28,7 +28,7 @@ export const routes: Routes = [
     children: [
       { path: 'tests', component: ListTestsComponent },
       { path: 'tests/:id/take', component: TakeTestComponent },
-      { path: 'tests/:id/results', component: TestResultComponent },
+      { path: 'results', component: TestResultComponent },
       { path: '', redirectTo: 'tests', pathMatch: 'full' }
     ]
   },

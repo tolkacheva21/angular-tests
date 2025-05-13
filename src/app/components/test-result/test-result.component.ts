@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TestService } from '../../services/test.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-test-result',
@@ -20,7 +21,8 @@ export class TestResultComponent implements OnInit {
 
   constructor(
     private testService: TestService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -47,12 +49,16 @@ export class TestResultComponent implements OnInit {
 
   viewDetails(result: TestResult): void {
     console.log('Детали результата:', result);
-    alert(`Детали теста для ${result.studentName}\nПравильных ответов: ${result.score} из ${result.maxScore}`);
+    this.showSnackbar(`Детали теста для ${result.studentName}\nПравильных ответов: ${result.score} из ${result.maxScore}`);
   }
 
   goBack(): void {
     this.router.navigate(['/tests']).catch(err => {
     console.error('Navigation error:', err);
     });
+  }
+
+  private showSnackbar(message: string): void {
+    this.snackBar.open(message, 'Закрыть', {duration: 3000});
   }
 }
