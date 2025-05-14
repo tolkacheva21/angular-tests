@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Test } from '../../models/test.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './create-test.component.css'
 })
 
-export class CreateTestComponent {
+export class CreateTestComponent implements OnInit {
   test: Test = {
     id: Date.now().toString(),
     title: '',
@@ -44,7 +44,7 @@ export class CreateTestComponent {
       }
     } else {
       this.test.id = Date.now().toString(); // Генерируем новый ID только для нового теста
-      this.addQuestion(); // Добавляем первый вопрос только при создании нового теста
+      this.addQuestion();
     }
   }
 

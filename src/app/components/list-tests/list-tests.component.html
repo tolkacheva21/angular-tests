@@ -42,9 +42,6 @@
             <button (click)="takeTest(test.id)" class="btn btn-take">
               Пройти
             </button>
-            <!-- <button (click)="viewResults(test.id)" class="btn btn-results">
-              Результаты
-            </button> -->
             <button *ngIf="isTeacher" (click)="deleteTest(test.id)" class="btn btn-delete">
               Удалить
             </button>

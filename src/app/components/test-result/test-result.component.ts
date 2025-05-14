@@ -48,14 +48,11 @@ export class TestResultComponent implements OnInit {
   }
 
   viewDetails(result: TestResult): void {
-    console.log('Детали результата:', result);
     this.showSnackbar(`Детали теста для ${result.studentName}\nПравильных ответов: ${result.score} из ${result.maxScore}`);
   }
 
   goBack(): void {
-    this.router.navigate(['/tests']).catch(err => {
-    console.error('Navigation error:', err);
-    });
+    this.router.navigate(['/tests']);
   }
 
   private showSnackbar(message: string): void {
