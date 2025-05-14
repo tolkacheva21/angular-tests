@@ -24,7 +24,6 @@
             <th>Баллы</th>
             <th>% выполнения</th>
             <th>Дата</th>
-            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -46,11 +45,6 @@
               </div>
             </td>
             <td>{{ result.completedAt | date:'dd.MM.yyyy HH:mm' }}</td>
-            <td>
-              <button (click)="viewDetails(result)" class="btn-details">
-                Детали
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>

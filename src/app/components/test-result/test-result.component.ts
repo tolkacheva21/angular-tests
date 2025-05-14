@@ -47,10 +47,6 @@ export class TestResultComponent implements OnInit {
     return Math.round((score / maxScore) * 100);
   }
 
-  viewDetails(result: TestResult): void {
-    this.showSnackbar(`Детали теста для ${result.studentName}\nПравильных ответов: ${result.score} из ${result.maxScore}`);
-  }
-
   goBack(): void {
     this.router.navigate(['/tests']);
   }

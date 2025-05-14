@@ -138,25 +138,6 @@ export class CreateTestComponent implements OnInit {
     return true;
   }
 
-  loadTest(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
-
-    const file = input.files[0];
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      try {
-        const loadedTest = JSON.parse(reader.result as string) as Test;
-        this.test = loadedTest;
-      } catch (error) {
-        this.showSnackbar('Ошибка при загрузке файла: ' + (error as Error).message);
-      }
-    };
-
-    reader.readAsText(file);
-  }
-
   async clearTest(): Promise<void> {
     const confirmed = await this.showConfirmDialog(
       'Подтверждение',

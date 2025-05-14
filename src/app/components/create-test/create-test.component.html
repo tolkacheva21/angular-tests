@@ -67,10 +67,6 @@
     <button (click)="saveTest()" class="btn btn-success">
       {{ isEditMode ? 'Обновить тест' : 'Сохранить тест' }}
     </button>
-    <label class="btn btn-info">
-      Загрузить тест
-      <input type="file" accept=".json" (change)="loadTest($event)" style="display: none;">
-    </label>
     <button (click)="clearTest()" class="btn btn-warning">Очистить</button>
   </div>
 </div>
